@@ -1,0 +1,5 @@
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.backend.rule=Host(`api.example.com`)"
+  - "traefik.http.routers.backend.entrypoints=web"
+  - "traefik.http.services.backend.loadbalancer.server.port=8080"
