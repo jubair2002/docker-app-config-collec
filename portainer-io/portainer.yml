@@ -1,0 +1,24 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:lts
+    container_name: portainer
+    restart: unless-stopped
+    command: --admin-password '$$2a$$12$$JGcNRpcrWYkWYvmTG4Sp0.0TTY3XYKI3..c5zb3acr50BlHiEBSxq'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.localhost`)"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+volumes:
+  portainer_data:
+    name: portainer_data
+
+networks:
+  traefik-network:
+    external: true

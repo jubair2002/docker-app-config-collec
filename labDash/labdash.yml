@@ -1,0 +1,26 @@
+services:
+  lab-dash:
+    container_name: lab-dash
+    image: ghcr.io/anthonygress/lab-dash:latest
+    privileged: true
+    ports:
+      - 2022:2022
+    environment:
+      - SECRET=OAJNLz6iQCME5MT5R3wSUsVRgnSYiqMJuE4+4nCaEg8= 
+    volumes:
+      - /sys:/sys:ro
+      - /docker/lab-dash/config:/config
+      - /docker/lab-dash/uploads:/app/public/uploads
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.labdash.rule=Host(`labdash.localhost`)"
+      - "traefik.http.routers.labdash.entrypoints=web"
+      - "traefik.http.services.labdash.loadbalancer.server.port=2022"
+
+networks:
+  traefik-network:
+    external: true

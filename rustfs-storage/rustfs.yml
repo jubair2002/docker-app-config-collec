@@ -1,0 +1,27 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: rustfs
+    restart: unless-stopped
+    command: --console-enable /data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ~/rustfs/data:/data
+      - ~/rustfs/logs:/logs
+    environment:
+      - RUSTFS_ACCESS_KEY=rustfsadmin
+      - RUSTFS_SECRET_KEY=rustfsadmin
+      - RUSTFS_CONSOLE_ENABLE=true
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rustfs.rule=Host(`rustfs.localhost`)"
+      - "traefik.http.routers.rustfs.entrypoints=web"
+      - "traefik.http.services.rustfs.loadbalancer.server.port=9001"
+
+networks:
+  traefik-network:
+    external: true
