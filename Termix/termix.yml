@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    ports:
+      - "8200:8200"   # access via http://localhost:8200
+    environment:
+      PORT: "8200"
+    volumes:
+      - /Docker/termix/data:/app/data
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.termix.rule=Host(`termix.localhost`)"
+      - "traefik.http.routers.termix.entrypoints=web"
+      - "traefik.http.services.termix.loadbalancer.server.port=8200"
+
+networks:
+  traefik-network:
+    external: true

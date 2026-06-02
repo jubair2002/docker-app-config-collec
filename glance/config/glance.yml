@@ -1,0 +1,44 @@
+server:
+  proxied: true
+  assets-path: /app/assets
+
+document:
+  head: |
+    <style>
+      :root {
+        --border-radius: 8px;
+      }
+
+      .page {
+        gap: 1rem;
+      }
+
+      .widget {
+        border: 1px solid hsl(var(--color-primary) / 0.14);
+        box-shadow: 0 12px 32px hsl(220 32% 4% / 0.22);
+      }
+
+      .widget-header {
+        padding-bottom: 0.45rem;
+      }
+
+      .monitor-site,
+      .bookmarks-link {
+        border-radius: 8px;
+      }
+    </style>
+
+branding:
+  app-name: Homelab
+  logo-text: HL
+  hide-footer: true
+
+theme:
+  background-color: 220 18 10
+  primary-color: 168 74 52
+  positive-color: 142 65 48
+  negative-color: 0 72 58
+  contrast-multiplier: 1.15
+
+pages:
+  $include: home.yml

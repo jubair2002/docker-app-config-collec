@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  openspeedtest:
+    image: openspeedtest/latest
+    container_name: openspeedtest
+    restart: unless-stopped
+    ports:
+      - "3004:3000"
+    volumes:
+      - /Docker/openspeedtest:/data
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openspeedtest.rule=Host(`openspeedtest.localhost`)"
+      - "traefik.http.routers.openspeedtest.entrypoints=web"
+      - "traefik.http.services.openspeedtest.loadbalancer.server.port=3000"
+
+networks:
+  traefik-network:
+    external: true

@@ -1,0 +1,81 @@
+- name: Home
+  hide-desktop-navigation: true
+  columns:
+    - size: small
+      widgets:
+        - type: clock
+          hour-format: 12h
+          timezones:
+            - timezone: Asia/Dhaka
+              label: Dhaka
+
+        - type: server-stats
+          title: Host
+          servers:
+            - type: local
+              name: Ubuntu
+
+    - size: full
+      widgets:
+        - type: docker-containers
+          title: Containers
+          hide-by-default: true
+          format-container-names: true
+          containers:
+            portainer:
+              name: Portainer
+              description: Docker management
+              url: http://portainer.localhost
+              icon: sh:portainer
+              hide: false
+            dockpeek:
+              name: DockPeek
+              description: Container overview
+              url: http://dockpeek.localhost
+              icon: sh:dockpeek
+              hide: false
+            termix:
+              name: Termix
+              description: Web terminal
+              url: http://termix.localhost
+              icon: mdi:console
+              hide: false
+            openspeedtest:
+              name: OpenSpeedTest
+              description: Network speed test
+              url: http://openspeedtest.localhost
+              icon: mdi:speedometer
+              hide: false
+            rustfs:
+              name: RustFS
+              description: Object storage
+              url: http://rustfs.localhost
+              icon: sh:minio
+              hide: false
+            traefik:
+              name: Traefik
+              description: Reverse proxy
+              url: http://traefik.localhost
+              icon: sh:traefik
+              hide: false
+
+        - type: group
+          widgets:
+            - type: releases
+              title: Updates
+              cache: 1d
+              collapse-after: 5
+              repositories:
+                - glanceapp/glance
+                - portainer/portainer
+                - traefik/traefik
+                - rustfs/rustfs
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: true
+              collapse-after: 5
+
+    - size: small
+      widgets:
+        - type: to-do
+          title: Notes

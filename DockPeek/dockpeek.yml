@@ -1,0 +1,25 @@
+services:
+  dockpeek:
+    image: ghcr.io/dockpeek/dockpeek:latest
+    container_name: dockpeek
+    environment:
+      - SECRET_KEY=OAJNLz6iQCME5MT5R3wSUsVRgnSYiqMJuE4+4nCaEg8=
+      - USERNAME=admin # username
+      - PASSWORD=admin # password
+    ports:
+      - "9595:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /docker/dockpeek:/app/data
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dockpeek.rule=Host(`dockpeek.localhost`)"
+      - "traefik.http.routers.dockpeek.entrypoints=web"
+      - "traefik.http.services.dockpeek.loadbalancer.server.port=8000"
+
+networks:
+  traefik-network:
+    external: true
