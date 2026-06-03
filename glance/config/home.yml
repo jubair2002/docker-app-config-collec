@@ -1,24 +1,35 @@
 - name: Home
   hide-desktop-navigation: true
   columns:
+    # ── LEFT COLUMN ──────────────────────────────────────────────
     - size: small
       widgets:
+        # Clock – Bangladesh time only
         - type: clock
           hour-format: 12h
           timezones:
             - timezone: Asia/Dhaka
-              label: Dhaka
+              label: "🇧🇩 Dhaka, BD"
 
+        # Weather – Dhaka
+        - type: weather
+          location: Dhaka, Bangladesh
+          units: metric
+          hour-format: 12h
+
+        # Server / host info
         - type: server-stats
-          title: Host
+          title: Host Information
           servers:
             - type: local
               name: Ubuntu
 
+    # ── CENTER COLUMN ─────────────────────────────────────────────
     - size: full
       widgets:
+        # Docker container management
         - type: docker-containers
-          title: Containers
+          title: Container Services
           hide-by-default: true
           format-container-names: true
           containers:
@@ -59,8 +70,12 @@
               icon: sh:traefik
               hide: false
 
+        # ── All feeds in ONE tabbed card ──
+        # Clicking a tab swaps content inside this single widget —
+        # no page scroll, no separate sections.
         - type: group
           widgets:
+            # Tab 1 – Release updates
             - type: releases
               title: Updates
               cache: 1d
@@ -70,12 +85,121 @@
                 - portainer/portainer
                 - traefik/traefik
                 - rustfs/rustfs
+
+            # Tab 2 – r/selfhosted
             - type: reddit
+              title: r/selfhosted
               subreddit: selfhosted
               show-thumbnails: true
               collapse-after: 5
 
+            # Tab 3 – r/homelab
+            - type: reddit
+              title: r/homelab
+              subreddit: homelab
+              show-thumbnails: true
+              collapse-after: 5
+
+            # Tab 4 – r/linux
+            - type: reddit
+              title: r/linux
+              subreddit: linux
+              show-thumbnails: true
+              collapse-after: 5
+
+            # Tab 5 – Tech News (multi-source RSS)
+            - type: rss
+              title: Tech News
+              cache: 2h
+              collapse-after: 7
+              feeds:
+                - url: https://news.ycombinator.com/rss
+                  title: Hacker News
+                - url: https://www.theverge.com/rss/index.xml
+                  title: The Verge
+                - url: https://techcrunch.com/feed/
+                  title: TechCrunch
+                - url: https://feeds.arstechnica.com/arstechnica/index
+                  title: Ars Technica
+                - url: https://www.wired.com/feed/rss
+                  title: Wired
+                - url: https://www.technologyreview.com/feed/
+                  title: MIT Tech Review
+
+            # Tab 6 – Medium Tech topics
+            - type: rss
+              title: Medium
+              cache: 3h
+              collapse-after: 7
+              feeds:
+                - url: https://medium.com/feed/tag/technology
+                  title: Technology
+                - url: https://medium.com/feed/tag/programming
+                  title: Programming
+                - url: https://medium.com/feed/tag/self-hosted
+                  title: Self-Hosted
+                - url: https://medium.com/feed/tag/linux
+                  title: Linux
+                - url: https://medium.com/feed/tag/devops
+                  title: DevOps
+
+            # Tab 7 – AI & ML news
+            - type: rss
+              title: AI & ML
+              cache: 2h
+              collapse-after: 7
+              feeds:
+                - url: https://venturebeat.com/category/ai/feed/
+                  title: VentureBeat AI
+                - url: https://thegradient.pub/rss/
+                  title: The Gradient
+                - url: https://jack-clark.net/feed/
+                  title: Import AI
+
+    # ── RIGHT COLUMN ──────────────────────────────────────────────
     - size: small
       widgets:
+        # Quick Links / Bookmarks
+        - type: bookmarks
+          title: Quick Links
+          groups:
+            - title: Infrastructure
+              color: 220 91 54
+              links:
+                - title: Portainer
+                  url: http://portainer.localhost
+                  icon: sh:portainer
+                - title: Traefik
+                  url: http://traefik.localhost
+                  icon: sh:traefik
+                - title: DockPeek
+                  url: http://dockpeek.localhost
+                  icon: sh:dockpeek
+            - title: Tools
+              color: 142 60 45
+              links:
+                - title: Termix
+                  url: http://termix.localhost
+                  icon: mdi:console
+                - title: OpenSpeedTest
+                  url: http://openspeedtest.localhost
+                  icon: mdi:speedometer
+                - title: RustFS
+                  url: http://rustfs.localhost
+                  icon: sh:minio
+            - title: Resources
+              color: 260 70 55
+              links:
+                - title: Glance Docs
+                  url: https://github.com/glanceapp/glance/blob/main/docs/configuration.md
+                  icon: mdi:book-open-variant
+                - title: Selfh.st Icons
+                  url: https://selfh.st/icons/
+                  icon: mdi:image-search
+                - title: r/homelab
+                  url: https://reddit.com/r/homelab
+                  icon: mdi:reddit
+
+        # To-Do / Notes
         - type: to-do
           title: Notes
